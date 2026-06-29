@@ -22,16 +22,7 @@ services:
       - WHISPER_MODEL=${WHISPER_MODEL:-base}
       - MUSICGEN_MODEL=${MUSICGEN_MODEL:-facebook/musicgen-small}
       - YOUTUBE_PRIVACY=${YOUTUBE_PRIVACY:-private}
-      - INSTAGRAM_ACCESS_TOKEN=${INSTAGRAM_ACCESS_TOKEN:-}
-      - INSTAGRAM_ACCOUNT_ID=${INSTAGRAM_ACCOUNT_ID:-}
       - SVD_ENABLED=${SVD_ENABLED:-false}
-    deploy:
-      resources:
-        reservations:
-          devices:
-            - driver: nvidia
-              count: all
-              capabilities: [gpu]
     restart: unless-stopped
 
   # ── Ollama (standalone, optional — use if you prefer a separate container) ─

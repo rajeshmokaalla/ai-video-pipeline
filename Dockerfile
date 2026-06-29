@@ -1,4 +1,5 @@
-FROM nvidia/cuda:12.4.1-cudnn-runtime-ubuntu22.04
+ARG BASE_IMAGE=ubuntu:22.04
+FROM ${BASE_IMAGE}
 
 # ── System dependencies ───────────────────────────────────────────────────────
 ENV DEBIAN_FRONTEND=noninteractive
@@ -28,10 +29,12 @@ RUN curl -fsSL https://ollama.ai/install.sh | sh
 
 WORKDIR /app
 
-# ── PyTorch (CUDA 12.4) ───────────────────────────────────────────────────────
+# ── PyTorch ───────────────────────────────────────────────────────────────────
+# CPU by default; GPU build overrides TORCH_INDEX_URL via docker-compose.gpu.yml
+ARG TORCH_INDEX_URL=https://download.pytorch.org/whl/cpu
 RUN pip install --no-cache-dir \
         torch torchvision torchaudio \
-        --index-url https://download.pytorch.org/whl/cu124
+        --index-url ${TORCH_INDEX_URL}
 
 # ── Audiocraft (install without deps to skip the torchtext==0.16.0 pin) ──────
 RUN pip install --no-cache-dir --no-deps audiocraft>=1.3.0
