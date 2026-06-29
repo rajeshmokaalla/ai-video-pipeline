@@ -27,11 +27,17 @@ RUN curl -fsSL https://ollama.ai/install.sh | sh
 
 WORKDIR /app
 
-# ── Python dependencies ───────────────────────────────────────────────────────
-COPY requirements.txt .
+# ── PyTorch (CUDA 12.4) ───────────────────────────────────────────────────────
 RUN pip install --no-cache-dir \
-        torch torchvision --index-url https://download.pytorch.org/whl/cu124 && \
-    pip install --no-cache-dir -r requirements.txt
+        torch torchvision torchaudio \
+        --index-url https://download.pytorch.org/whl/cu124
+
+# ── Audiocraft (install without deps to skip the torchtext==0.16.0 pin) ──────
+RUN pip install --no-cache-dir --no-deps audiocraft>=1.3.0
+
+# ── Remaining Python dependencies ─────────────────────────────────────────────
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
 
 # ── App code ──────────────────────────────────────────────────────────────────
 COPY . .

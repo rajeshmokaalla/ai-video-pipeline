@@ -12,7 +12,9 @@ requests>=2.32.0
 # No extra Python package needed
 
 # ── Music: MusicGen (audiocraft) ─────────────────────────────────────────────
-audiocraft>=1.3.0
+# audiocraft is installed via Dockerfile with --no-deps to avoid the broken
+# torchtext==0.16.0 pin (that package only exists on the PyTorch whl index).
+# Install manually outside Docker: pip install --no-deps audiocraft>=1.3.0
 scipy>=1.13.0
 numpy>=1.26.0
 
@@ -33,9 +35,6 @@ google-api-python-client>=2.143.0
 google-auth>=2.34.0
 google-auth-oauthlib>=1.2.1
 google-auth-httplib2>=0.2.0
-
-# ── Instagram upload ──────────────────────────────────────────────────────────
-# Uses Meta Graph API via requests (already listed above)
 
 # ── Video (FFmpeg Python wrapper for duration probe) ─────────────────────────
 # ffmpeg binary is required — see Dockerfile or install guide
