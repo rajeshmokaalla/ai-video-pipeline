@@ -9,7 +9,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         libsndfile1 \
         wget curl git \
         fonts-urw-base35 \
-        zstd \
     && rm -rf /var/lib/apt/lists/*
 
 # ── Python alias ─────────────────────────────────────────────────────────────
@@ -23,9 +22,6 @@ RUN wget -q "https://github.com/rhasspy/piper/releases/download/${PIPER_VERSION}
     && tar -xzf /tmp/piper.tar.gz -C /usr/local/bin \
     && rm /tmp/piper.tar.gz \
     && chmod +x /usr/local/bin/piper
-
-# ── Ollama ────────────────────────────────────────────────────────────────────
-RUN curl -fsSL https://ollama.ai/install.sh | sh
 
 WORKDIR /app
 
@@ -52,9 +48,6 @@ RUN mkdir -p outputs/{scripts,audio,music,images,videos,subtitles} \
 
 # ── Ports ─────────────────────────────────────────────────────────────────────
 EXPOSE 7860
-# Gradio UI
-EXPOSE 11434
-# Ollama API
 
 # ── Entrypoint ────────────────────────────────────────────────────────────────
 COPY docker-entrypoint.sh /usr/local/bin/
