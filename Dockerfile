@@ -8,6 +8,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         libsndfile1 \
         wget curl git \
         fonts-urw-base35 \
+        zstd \
     && rm -rf /var/lib/apt/lists/*
 
 # ── Python alias ─────────────────────────────────────────────────────────────
